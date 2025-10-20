@@ -1,7 +1,7 @@
 
 extends Node3D
 
-@onready var program_path = "./main"
+@onready var program_path = "./simulation"
 
 @onready var gun_x: SpinBox = $UI/GunPosContainer/GridContainer2/MSpinBox
 @onready var gun_y: SpinBox = $UI/GunPosContainer/GridContainer2/MSpinBox2
