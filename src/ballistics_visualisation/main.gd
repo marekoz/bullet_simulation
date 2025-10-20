@@ -38,10 +38,12 @@ signal muzzle_changed
 signal target_changed
 
 func _ready():
-	target_node.position = Vector3(target_x.value, target_z.value, target_y.value)
-	muzzle_node.position = Vector3(gun_x.value, gun_z.value, gun_y.value)
 	muzzle_changed.connect(change_muzzle_text)
 	target_changed.connect(change_target_text)
+	target_node.position = Vector3(target_x.value, target_z.value, target_y.value)
+	muzzle_node.position = Vector3(gun_x.value, gun_z.value, gun_y.value)
+	target_changed.emit()
+
 
 
 # Input handling for setting muzzle/target position with mouse
