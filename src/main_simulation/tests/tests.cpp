@@ -1,5 +1,4 @@
 #include "catch2/catch.hpp"  
-
 #include "simulation.hpp"
 #include "entt/entt.hpp"
 
