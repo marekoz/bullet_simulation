@@ -24,7 +24,6 @@ Options:
 ### 2. 3D Application
 Alternatively, you can run a separate 3D application built with Godot Engine, which also visualizes the bullet trajectory. The executable for this application is located at: `builds/ballistics_visualisation.x86_64`
 
-
 ---
 
 ## Source Files Overview
@@ -54,12 +53,11 @@ The **Bullet Simulation** project is composed of three main modules:
 
 
 
-## Main Simulation Build Instructions
+## Build Instructions
 ### Requirements
 - **CMake** (>= 3.24)  
 - **C++** compiler 
 - **Catch2** (for testing)  
-
 
 ---
 ### Build Steps
@@ -74,6 +72,11 @@ cmake ..
 # compile all targets
 cmake --build .
 ```
+### 3D Application 
+
+The 3D application project can be opened, edited, and exported using **Godot 4.5**.  
+To access the project, open the `project.godot` file located in the `src/ballistics_visualisation/` directory.
+
 
 ## Directory Structure
 
