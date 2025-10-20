@@ -52,7 +52,6 @@ The **Bullet Simulation** project is composed of three main modules:
     - Implemented using **Godot Engine 4.5**.
 
 
-
 ## Build Instructions
 ### Requirements
 - **CMake** (>= 3.24)  
