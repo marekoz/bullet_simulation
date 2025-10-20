@@ -1,0 +1,428 @@
+[gd_scene load_steps=21 format=3 uid="uid://dueea51lt0n3e"]
+
+[ext_resource type="Script" uid="uid://dd6ovcvppqeh5" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cs11p1i424r2u" path="res://free_look_camera.gd" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://kxhyopksrwyw" path="res://ground.png" id="2_lquwl"]
+[ext_resource type="Texture2D" uid="uid://bmg4f6201k8i4" path="res://beam.png" id="3_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://dlayctcy22hk2" path="res://circle.png" id="4_lquwl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lquwl"]
+size = Vector3(10000, 1, 10000)
+
+[sub_resource type="Gradient" id="Gradient_ig7tw"]
+colors = PackedColorArray(0.378062, 0.156286, 2.40654e-08, 1, 2.31028e-06, 0.539633, 0.0810014, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0xm2m"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_h2yge"]
+width = 1024
+height = 1024
+noise = SubResource("FastNoiseLite_0xm2m")
+color_ramp = SubResource("Gradient_ig7tw")
+seamless = true
+
+[sub_resource type="Gradient" id="Gradient_7dm0k"]
+offsets = PackedFloat32Array(0.0109489, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ig7tw"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0xm2m"]
+noise = SubResource("FastNoiseLite_ig7tw")
+color_ramp = SubResource("Gradient_7dm0k")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
+albedo_texture = SubResource("NoiseTexture2D_h2yge")
+heightmap_enabled = true
+heightmap_texture = SubResource("NoiseTexture2D_0xm2m")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lquwl"]
+size = Vector2(10000, 10000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
+albedo_color = Color(0.38170326, 0.38170323, 0.38170323, 1)
+albedo_texture = ExtResource("2_lquwl")
+uv1_scale = Vector3(100, 100, 100)
+texture_filter = 4
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
+
+[sub_resource type="Sky" id="Sky_0xm2m"]
+sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
+
+[sub_resource type="Environment" id="Environment_h2yge"]
+background_mode = 2
+sky = SubResource("Sky_0xm2m")
+
+[sub_resource type="Curve3D" id="Curve3D_7dm0k"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 35.8476, -4.31179, 13.5486, 0, 0, 0, 0, 0, 0, 6.61056, 20.8098, 11.2328, 0, 0, 0, 0, 0, 0, -46.48, 24.7107, -9.83741, 0, 0, 0, 0, 0, 0, -69.1791, 8.17099, -26.2069),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+shading_mode = 0
+albedo_color = Color(0.982312, 2.3872852e-05, 0.6816924, 1)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_ig7tw")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="GroundBody" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/GroundBody"]
+shape = SubResource("BoxShape3D_lquwl")
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Node3D"]
+material_override = SubResource("StandardMaterial3D_1bvp3")
+mesh = SubResource("PlaneMesh_lquwl")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_1bvp3")
+
+[node name="GroundMesh2" type="MeshInstance3D" parent="Node3D"]
+visible = false
+material_override = SubResource("StandardMaterial3D_7mycd")
+mesh = SubResource("PlaneMesh_lquwl")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_1bvp3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/GroundMesh2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/GroundMesh2/StaticBody3D"]
+shape = SubResource("BoxShape3D_lquwl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -0.25881898, 0.9659259, 0, -0.9659259, -0.25881898, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 2000.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Node3D"]
+environment = SubResource("Environment_h2yge")
+
+[node name="BulletPath" type="Path3D" parent="Node3D"]
+curve = SubResource("Curve3D_7dm0k")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Node3D"]
+polygon = PackedVector2Array(-0.3, 0.3, 0.3, 0.3, 0.3, -0.3, -0.3, -0.3)
+mode = 2
+path_node = NodePath("../BulletPath")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("StandardMaterial3D_lquwl")
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
+transform = Transform3D(-4.2222e-08, -0.25881898, 0.9659259, -1.13133e-08, 0.9659259, 0.25881898, -1, 4.618527e-14, -4.371142e-08, 354, 81, 0)
+far = 10000.0
+script = ExtResource("2_0xm2m")
+
+[node name="Muzzle" type="Node3D" parent="Node3D"]
+
+[node name="SpriteBeam" type="Sprite3D" parent="Node3D/Muzzle"]
+transform = Transform3D(1, 0, 0, 0, 1000, 0, 0, 0, 1, 0, 0, 0)
+modulate = Color(0.07058824, 0.38431373, 1, 1)
+pixel_size = 0.0002
+billboard = 2
+fixed_size = true
+render_priority = -1
+texture = ExtResource("3_1bvp3")
+
+[node name="SpriteDot" type="Sprite3D" parent="Node3D/Muzzle"]
+modulate = Color(0.07058824, 0.38431373, 1, 1)
+pixel_size = 0.0002
+billboard = 1
+double_sided = false
+fixed_size = true
+render_priority = -2
+texture = ExtResource("4_lquwl")
+
+[node name="Label3D" type="Label3D" parent="Node3D/Muzzle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+pixel_size = 0.0024
+billboard = 1
+fixed_size = true
+render_priority = 1
+modulate = Color(0.07227407, 0.38602605, 1, 1)
+text = "Muzzle
+0, 0, 0"
+font_size = 16
+horizontal_alignment = 0
+vertical_alignment = 2
+
+[node name="Target" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100)
+
+[node name="Label3D" type="Label3D" parent="Node3D/Target"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+pixel_size = 0.0024
+billboard = 1
+fixed_size = true
+modulate = Color(0.7921569, 0, 0.050980393, 1)
+text = "Target
+0, 0, 0"
+font_size = 16
+horizontal_alignment = 0
+vertical_alignment = 2
+
+[node name="SpriteBeam" type="Sprite3D" parent="Node3D/Target"]
+transform = Transform3D(1, 0, 0, 0, 1000, 0, 0, 0, 1, 0, 0, 0)
+modulate = Color(0.7921569, 0, 0.050980393, 1)
+pixel_size = 0.0002
+billboard = 2
+double_sided = false
+fixed_size = true
+render_priority = -1
+texture = ExtResource("3_1bvp3")
+
+[node name="SpriteDot" type="Sprite3D" parent="Node3D/Target"]
+modulate = Color(0.7921569, 0, 0.050980393, 1)
+pixel_size = 0.0002
+billboard = 1
+double_sided = false
+fixed_size = true
+render_priority = -2
+texture = ExtResource("4_lquwl")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -171.0
+offset_right = 282.0
+offset_bottom = -66.0
+grow_vertical = 0
+columns = 2
+
+[node name="Label3" type="Label" parent="UI/GridContainer"]
+custom_minimum_size = Vector2(172, 0)
+layout_mode = 2
+text = "Bullet Speed (m/s): "
+
+[node name="SpinBox4" type="SpinBox" parent="UI/GridContainer"]
+layout_mode = 2
+max_value = 10000.0
+value = 300.0
+
+[node name="Label4" type="Label" parent="UI/GridContainer"]
+custom_minimum_size = Vector2(172, 0)
+layout_mode = 2
+text = "Step Length (s): "
+
+[node name="SpinBox5" type="SpinBox" parent="UI/GridContainer"]
+layout_mode = 2
+step = 0.001
+value = 0.01
+
+[node name="Label5" type="Label" parent="UI/GridContainer"]
+custom_minimum_size = Vector2(172, 0)
+layout_mode = 2
+text = "Bullet Mass (g): "
+
+[node name="SpinBox6" type="SpinBox" parent="UI/GridContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 5000.0
+step = 0.1
+value = 7.5
+
+[node name="GunPosContainer" type="GridContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -305.0
+offset_right = 278.0
+offset_bottom = -247.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="UI/GunPosContainer"]
+layout_mode = 2
+text = " Gun Position (X, Y, Z):      "
+horizontal_alignment = 1
+
+[node name="GridContainer2" type="GridContainer" parent="UI/GunPosContainer"]
+layout_mode = 2
+columns = 5
+
+[node name="MSpinBox" type="SpinBox" parent="UI/GunPosContainer/GridContainer2"]
+layout_mode = 2
+min_value = -5000.0
+max_value = 5000.0
+step = 0.1
+
+[node name="MSpinBox2" type="SpinBox" parent="UI/GunPosContainer/GridContainer2"]
+layout_mode = 2
+min_value = -5000.0
+max_value = 5000.0
+step = 0.1
+
+[node name="MSpinBox3" type="SpinBox" parent="UI/GunPosContainer/GridContainer2"]
+layout_mode = 2
+max_value = 5000.0
+step = 0.1
+
+[node name="TargetPosContainer" type="GridContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -237.0
+offset_right = 278.0
+offset_bottom = -179.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="UI/TargetPosContainer"]
+layout_mode = 2
+text = "Target Position (X, Y, Z):      "
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="UI/TargetPosContainer"]
+layout_mode = 2
+
+[node name="GridContainer2" type="GridContainer" parent="UI/TargetPosContainer"]
+layout_mode = 2
+columns = 5
+
+[node name="TSpinBox" type="SpinBox" parent="UI/TargetPosContainer/GridContainer2"]
+layout_mode = 2
+min_value = -5000.0
+max_value = 5000.0
+step = 0.1
+value = 100.0
+
+[node name="TSpinBox2" type="SpinBox" parent="UI/TargetPosContainer/GridContainer2"]
+layout_mode = 2
+min_value = -5000.0
+max_value = 5000.0
+step = 0.1
+value = 100.0
+
+[node name="TSpinBox3" type="SpinBox" parent="UI/TargetPosContainer/GridContainer2"]
+layout_mode = 2
+max_value = 5000.0
+step = 0.1
+
+[node name="ButtonCalculate" type="Button" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -60.0
+offset_right = 274.0
+offset_bottom = -10.0
+grow_vertical = 0
+focus_mode = 0
+text = "Simulate Trajectory"
+icon_alignment = 1
+
+[node name="ResultLabel" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 286.0
+offset_top = -276.0
+offset_right = 731.0
+offset_bottom = -8.0
+grow_vertical = 0
+
+[node name="HelpContainer" type="GridContainer" parent="UI"]
+layout_mode = 1
+offset_top = 31.0
+offset_right = 238.0
+offset_bottom = 158.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/HelpContainer"]
+custom_minimum_size = Vector2(320, 165.045)
+layout_direction = 2
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Move Cam:[/b]               W / A / S / D
+[b]Rotate Cam:[/b]             Right Click
+[b]Cam Speed:[/b]              Mouse Scroll
+[b]Target Position:[/b]      Shift + Left Click
+[b]Muzzle Position:[/b]     Ctrl + Left Click
+[b]Target Z Position:[/b]   Shift + Mouse Scroll
+[b]Muzzle Z Position:[/b]  Ctrl + Mouse Scroll
+[b]Run Simulation:[/b]      Spacebar / Enter"
+fit_content = true
+
+[node name="HelpButton" type="Button" parent="UI"]
+layout_mode = 1
+offset_right = 131.0
+offset_bottom = 31.0
+focus_mode = 0
+text = "Hide Help"
+
+[node name="GroundButton" type="Button" parent="UI"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+icon = SubResource("NoiseTexture2D_h2yge")
+icon_alignment = 1
+expand_icon = true
+
+[node name="GroundButton2" type="Button" parent="UI"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -127.0
+offset_top = -60.0
+offset_right = -67.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+icon = ExtResource("2_lquwl")
+icon_alignment = 1
+expand_icon = true
+
+[node name="SimCDTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="value_changed" from="UI/GunPosContainer/GridContainer2/MSpinBox" to="." method="_on_m_spin_box_value_changed"]
+[connection signal="value_changed" from="UI/GunPosContainer/GridContainer2/MSpinBox2" to="." method="_on_m_spin_box_2_value_changed"]
+[connection signal="value_changed" from="UI/GunPosContainer/GridContainer2/MSpinBox3" to="." method="_on_m_spin_box_3_value_changed"]
+[connection signal="value_changed" from="UI/TargetPosContainer/GridContainer2/TSpinBox" to="." method="_on_t_spin_box_value_changed"]
+[connection signal="value_changed" from="UI/TargetPosContainer/GridContainer2/TSpinBox2" to="." method="_on_t_spin_box_2_value_changed"]
+[connection signal="value_changed" from="UI/TargetPosContainer/GridContainer2/TSpinBox3" to="." method="_on_t_spin_box_3_value_changed"]
+[connection signal="pressed" from="UI/ButtonCalculate" to="." method="_on_button_calculate_pressed"]
+[connection signal="pressed" from="UI/HelpButton" to="." method="_on_help_button_pressed"]
+[connection signal="pressed" from="UI/GroundButton" to="." method="_on_ground_button_pressed"]
+[connection signal="pressed" from="UI/GroundButton2" to="." method="_on_ground_button_2_pressed"]
+[connection signal="timeout" from="SimCDTimer" to="." method="_on_sim_cd_timer_timeout"]
