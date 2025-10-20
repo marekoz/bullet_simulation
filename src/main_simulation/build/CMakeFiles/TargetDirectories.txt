@@ -1,5 +1,0 @@
-/home/marek/Documents/vrgroup/vrgroup/build/CMakeFiles/simulation_lib.dir
-/home/marek/Documents/vrgroup/vrgroup/build/CMakeFiles/main.dir
-/home/marek/Documents/vrgroup/vrgroup/build/CMakeFiles/tests.dir
-/home/marek/Documents/vrgroup/vrgroup/build/CMakeFiles/edit_cache.dir
-/home/marek/Documents/vrgroup/vrgroup/build/CMakeFiles/rebuild_cache.dir
