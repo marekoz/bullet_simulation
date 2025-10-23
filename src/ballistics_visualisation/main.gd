@@ -61,6 +61,8 @@ func _process(_delta):
 
 
 func set_target_pos(pos: Vector3):
+	if pos.y < 0:
+		pos.y = 0
 	target_x.value = pos.x
 	target_y.value = pos.z
 	target_z.value = pos.y
@@ -69,6 +71,8 @@ func set_target_pos(pos: Vector3):
 
 
 func set_muzzle_pos(pos: Vector3):
+	if pos.y < 0:
+		pos.y = 0
 	gun_x.value = pos.x
 	gun_y.value = pos.z
 	gun_z.value = pos.y
@@ -180,6 +184,7 @@ func simulate_trajectory() -> void:
 		return
 	var curve = remake_curve(points)
 	bullet_path.curve = curve
+	$Node3D/CSGPolygon3D.visible = true # csg polygon with the curve as shape
 
 
 func _on_button_calculate_pressed() -> void:

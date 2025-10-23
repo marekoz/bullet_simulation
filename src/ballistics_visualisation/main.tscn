@@ -106,7 +106,8 @@ environment = SubResource("Environment_h2yge")
 curve = SubResource("Curve3D_7dm0k")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="Node3D"]
-polygon = PackedVector2Array(-0.3, 0.3, 0.3, 0.3, 0.3, -0.3, -0.3, -0.3)
+visible = false
+polygon = PackedVector2Array(-0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5)
 mode = 2
 path_node = NodePath("../BulletPath")
 path_interval_type = 0
@@ -257,7 +258,7 @@ grow_vertical = 0
 
 [node name="Label" type="Label" parent="UI/GunPosContainer"]
 layout_mode = 2
-text = " Gun Position (X, Y, Z):      "
+text = "Muzzle Position (X, Y, Z):      "
 horizontal_alignment = 1
 
 [node name="GridContainer2" type="GridContainer" parent="UI/GunPosContainer"]
