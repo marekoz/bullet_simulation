@@ -1,11 +1,15 @@
 # Bullet Trajectory Simulation
 
-This project is a simulation of a bullet trajectory towards a target. Its main purpose is to **search for the correct vertical angle** that allows the bullet to hit the target. The simulation calculates this angle based on the **muzzle position**, **target position**, **initial speed**, **bullet mass**, and **simulation step length**. It uses **Euler** and **RK4** numerical integration methods and  **binary search** to determine the required angle.  
-
+This project is a simulation of a bullet trajectory towards a target. 
+Its main purpose is to **search for the correct vertical angle** that allows the bullet to hit the target. 
+The simulation calculates this angle based on the **muzzle position**, **target position**, **initial speed**, **bullet mass**, and **simulation step length**. 
+It uses **Euler** and **RK4** methods and  **binary search** to determine the required angle.  
+The project was developed on and built for Linux Mint 22.
 
 ## Running This Application
 
-The angle search simulation can be run using the executables in the `builds` directory. There are two ways to run the program:
+The angle search simulation can be run using the executables in the `builds` directory. 
+There are two ways to run the program:
 
 ### 1. Command Line
 
