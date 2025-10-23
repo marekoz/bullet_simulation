@@ -6,8 +6,9 @@ The simulation calculates this angle based on the **muzzle position**, **target 
 It uses **Euler** and **RK4** methods and  **binary search** to determine the required angle.  
 The project was developed on and built for Linux Mint 22.
 
-[![Watch the demo](https://img.youtube.com/vi/g1iGP2KriXc/0.jpg)](https://youtu.be/g1iGP2KriXc?si=WaG3gbrln35_8MD_)
+[![Watch the video](https://img.youtube.com/vi/g1iGP2KriXc/maxresdefault.jpg)](https://youtu.be/g1iGP2KriXc)
 
+### [Watch this demo on YouTube](https://youtu.be/g1iGP2KriXc)
 
 ## Running This Application
 
