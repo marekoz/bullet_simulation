@@ -6,6 +6,9 @@ The simulation calculates this angle based on the **muzzle position**, **target 
 It uses **Euler** and **RK4** methods and  **binary search** to determine the required angle.  
 The project was developed on and built for Linux Mint 22.
 
+[![Watch the demo](https://img.youtube.com/vi/g1iGP2KriXc/0.jpg)](https://youtu.be/g1iGP2KriXc?si=WaG3gbrln35_8MD_)
+
+
 ## Running This Application
 
 The angle search simulation can be run using the executables in the `builds` directory. 
@@ -89,7 +92,7 @@ To access the project, open the `project.godot` file located in the `src/ballist
     - `simulation` — Runs the main angle search simulation
     - `tests` — Runs all of the unit tests.
 - **src/**
-    - **ballistics_visualisation/** — Godot 4.5 project for visualising bullet trajectories.
+    - **ballistics_visualisation/** - Godot 4.5 project for visualising bullet trajectories.
       - *(Contains `project.godot` and related Godot scene, script, and asset files.)*
     - **main_simulation/**
       - **build/** — Local build folder for compiled binaries or CMake cache.
